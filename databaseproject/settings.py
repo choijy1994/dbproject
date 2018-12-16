@@ -80,11 +80,10 @@ WSGI_APPLICATION = 'databaseproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hufsfood',
+        'NAME': 'dbuser$hufsfood',
         'USER':'dbuser',
         'PASSWORD':'db!@123',
         'HOST':'106.10.35.54',
-        'PORT':'3306',
         'OPTIONS':{ 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",}
     }
 }
