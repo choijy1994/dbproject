@@ -2,7 +2,7 @@ import pymysql
 from django.db.models import Q
 
 class restaurant():
-        def recommend(self, kind=None, cost=None, dist=None, rate=None):
+        def recommend(kind=None, cost=None, dist=None, rate=None):
                 q = Q()
                 if kind != None:
                         q &= Q(kind=kind)
