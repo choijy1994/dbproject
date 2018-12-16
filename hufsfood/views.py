@@ -4,12 +4,16 @@ from django.shortcuts import render
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Restaurant
+from .forms import recommendForm
+from .functions import restaurant as rstr
 
 
 #테이블이름을 restaurant라고 가정
 
 def index(request, show='default'):
-    return render(request, 'hufsfood/init.html')
+    restaurants = Restaurant.objects.all()
+    context = {'restaurants':restaurants}
+    return render(request, 'hufsfood/init.html', context)
 
 def show_chicken(request):
     restaurants = Restaurant.objects.filter(kind='치킨')
@@ -22,7 +26,7 @@ def show_chinese(request):
     return render(request, 'hufsfood/result.html', context)
 
 def show_pizza(request):
-    restaurants = Restaurant.objects.filter(kind='양식')
+    restaurants = Restaurant.objects.filter(kind='피자/양식')
     context = {'restaurants':restaurants}
     return render(request, 'hufsfood/result.html', context)
 
@@ -32,7 +36,7 @@ def show_korean(request):
     return render(request, 'hufsfood/result.html', context)
 
 def show_cafe(request):
-    restaurants = Restaurant.objects.filter(kind='카페')
+    restaurants = Restaurant.objects.filter(kind='카페/디저트')
     context = {'restaurants':restaurants}
     return render(request, 'hufsfood/result.html', context)
 
@@ -52,7 +56,40 @@ def show_bossam(request):
     return render(request, 'hufsfood/result.html', context)
 
 def show_japanese(request):
-    restaurants = Restaurant.objects.filter(kind='일식')
+    restaurants = Restaurant.objects.filter(kind='일식/돈까스')
     context = {'restaurants':restaurants}
     return render(request, 'hufsfood/result.html', context)
+
+def show_recommend(request):
+    restaurant = rstr()
+
+    if request.method == 'POST':
+        form = recommendForm(request.POST or None)
+        if form.is_valid():
+            q = rstr.recommend(
+                kind = form.cleaned_data.get('type_kind'),
+                cost=form.cleaned_data.get('type_cost'),
+                dist = form.cleaned_data.get('type_dist'),
+                rate = form.cleaned_data.get('type_rate'),
+                )
+
+            restaurants = Restaurant.objects.filter(q)
+
+            if not restaurants:
+                context = {'msg': '일치하는 맛집이 없습니다.'}
+            else:
+                context = {'restaurants': restaurants}
+        else:
+            context = {'msg': '제출한 양식이 올바르지 않습니다.'}
+
+        del restaurant
+        return render(request, 'hufsfood/result.html', context)
+    else:
+        form = recommendForm(request.POST)
+
+
+        del restaurant
+        return render(request, 'hufsfood/recommend.html',{'form' : form})
+
+
 

@@ -31,4 +31,9 @@ urlpatterns = [
 
     path('hufsfood/japanese', views.show_japanese, name='japanese'),
     path('hufsfood/japanese/', views.show_japanese, name='japanese'),
+
+    path('hufsfood/recommend', views.show_recommend, name='recommend'),
+    path('hufsfood/recommend/', views.show_recommend, name='recommend'),
+
+
     ]

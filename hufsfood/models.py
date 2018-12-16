@@ -115,8 +115,8 @@ class DjangoSession(models.Model):
 class HufsfoodRestaurant(models.Model):
     name = models.CharField(max_length=20)
     kind = models.CharField(max_length=20, blank=True, null=True)
-    cost = models.IntegerField(blank=True, null=True)
-    dist = models.CharField(max_length=10, blank=True, null=True)
+    cost = models.CharField(blank=True,max_length=10, null=True)
+    dist = models.IntegerField(max_length=10, blank=True, null=True)
     rate = models.FloatField(blank=True, null=True)
     optime = models.TimeField(blank=True, null=True)
     cltime = models.TimeField(blank=True, null=True)
@@ -137,8 +137,8 @@ class HufsfoodRestaurant(models.Model):
 class Restaurant(models.Model):
     name = models.CharField(primary_key=True, max_length=20)
     kind = models.CharField(max_length=20, blank=True, null=True)
-    cost = models.IntegerField(blank=True, null=True)
-    dist = models.CharField(max_length=10, blank=True, null=True)
+    cost = models.CharField(blank=True,max_length=10, null=True)
+    dist = models.IntegerField(max_length=10, blank=True, null=True)
     rate = models.FloatField(blank=True, null=True)
     ratecount = models.IntegerField(blank=True, null=True)
     optime = models.TimeField(blank=True, null=True)
